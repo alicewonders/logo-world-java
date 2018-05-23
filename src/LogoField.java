@@ -4,10 +4,10 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
-
 public class LogoField extends JPanel {
     private final int UP_OFFSET = 30;
     private final int LEFT_OFFSET = 40;
+    private final int GAME_FIELD_SIZE = 500;
 
     private Turtle turtle;
     private int fieldSize;
@@ -25,8 +25,8 @@ public class LogoField extends JPanel {
 
     LogoField(int size) {
         this.fieldSize = size;
-        this.cellSize = 500 / fieldSize;
-        turtle = new Turtle(3 * cellSize + LEFT_OFFSET, 3 * cellSize + UP_OFFSET, cellSize);
+        this.cellSize = GAME_FIELD_SIZE / fieldSize;
+        turtle = new Turtle(3 * cellSize + LEFT_OFFSET, 3 * cellSize + UP_OFFSET, cellSize, size);
         this.setLayout(new BorderLayout());
         this.add(turtle);
     }
@@ -40,7 +40,7 @@ public class LogoField extends JPanel {
         Graphics2D g2 = (Graphics2D) g;
         g2.setStroke(new BasicStroke(1.0f));
 
-        int lineOffset = 500 / fieldSize;
+        int lineOffset = GAME_FIELD_SIZE / fieldSize;
         for (int i = 0; i <= fieldSize; i++) {
             g2.drawLine(LEFT_OFFSET + i * lineOffset, UP_OFFSET,
                     LEFT_OFFSET + i * lineOffset, UP_OFFSET + fieldSize * lineOffset); //vertical

@@ -7,10 +7,14 @@ import java.io.File;
 import java.io.IOException;
 
 public class Turtle extends JPanel implements KeyListener {
-    private int x = 0, y = 0, velx = 0, vely = 0, cell;
+    private final int UP_OFFSET = 30;
+    private final int LEFT_OFFSET = 40;
+    private final int GAME_FIELD_SIZE = 500;
+
+    private int x = 0, y = 0, velx = 0, vely = 0, cell, cage;
     private boolean isDrawing;
 
-    public Turtle(int startX, int startY, int cellSize){
+    public Turtle(int startX, int startY, int cellSize, int cageNum){
         addKeyListener(this);
         setFocusable(true);
         setOpaque(false);
@@ -18,6 +22,7 @@ public class Turtle extends JPanel implements KeyListener {
         x = startX;
         y = startY;
         cell = cellSize;
+        cage = cageNum;
         isDrawing = false;
     }
 
@@ -36,8 +41,8 @@ public class Turtle extends JPanel implements KeyListener {
     }
 
     private void up() {
-        if (y < 30 + cell) {
-            vely = 0;
+        if (y < UP_OFFSET + cell) {
+            vely = (cage - 1) * cell;
             velx = 0;
         }
         else {
@@ -46,8 +51,8 @@ public class Turtle extends JPanel implements KeyListener {
         }
     }
     private void down() {
-        if (y > 500 - cell) {
-            vely = 0;
+        if (y > GAME_FIELD_SIZE - cell) {
+            vely = - (cage - 1) * cell;
             velx = 0;
         }
         else {
@@ -56,8 +61,8 @@ public class Turtle extends JPanel implements KeyListener {
         }
     }
     private void left() {
-        if (x < 40 + cell) {
-            velx = 0;
+        if (x < LEFT_OFFSET + cell) {
+            velx = (cage - 1) * cell;
             vely = 0;
         }
         else {
@@ -66,8 +71,8 @@ public class Turtle extends JPanel implements KeyListener {
         }
     }
     private void right() {
-        if (x > 500 - cell){
-            velx = 0;
+        if (x > GAME_FIELD_SIZE - cell){
+            velx = - (cage - 1) * cell;
             vely = 0;
         }
         else {
