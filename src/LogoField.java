@@ -1,5 +1,3 @@
-import javafx.util.Pair;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -32,7 +30,13 @@ public class LogoField extends JPanel {
         this.cellSize = GAME_FIELD_SIZE / fieldSize;
         turtle = new Turtle(3 * cellSize + LEFT_OFFSET, 3 * cellSize + UP_OFFSET, cellSize, size, turtleDrawHistory);
         this.setLayout(new BorderLayout());
+        JPanel commandPanel = new CommandLine();
+        commandPanel.setBounds(123, 540, 330, 35);
+        commandPanel.setOpaque(true);
+        commandPanel.setBackground(new Color(179, 240, 173));
+        this.add(commandPanel);
         this.add(turtle);
+
     }
 
     @Override
@@ -52,12 +56,18 @@ public class LogoField extends JPanel {
                     LEFT_OFFSET + fieldSize * lineOffset, UP_OFFSET + i * lineOffset); //horizontal
         }
 
-        g2.setColor(Color.PINK);
-        g2.setStroke(new BasicStroke(4.0f));
+        g2.setStroke(new BasicStroke(6.0f));
+//        g2.setColor(turtle.getNewColor());
         // Drawing path
+        // g2.setColor(turtle.getNewColor());
+//        turtle.setNewColor();
+//        turtle.setNewColor();
         for (Coordinates coordinates : turtleDrawHistory) {
+//            turtle.setNewColor();
+            g2.setColor(turtle.setNewColor());
+//            g2.setColor(coordinates.getNewColor());
             g2.drawLine(coordinates.getX1() + cellSize / 2, coordinates.getY1() + cellSize / 2,
-                        coordinates.getX2() + cellSize / 2, coordinates.getY2() + cellSize / 2);
+                    coordinates.getX2() + cellSize / 2, coordinates.getY2() + cellSize / 2);
         }
     }
 }
