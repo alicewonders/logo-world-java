@@ -1,3 +1,10 @@
+package field;
+
+import lineEvent.CommandLine;
+import lineEvent.CommandLineEvent;
+import lineEvent.CommandLineListener;
+import commandFactory.*;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -25,25 +32,39 @@ public class LogoField extends JPanel {
         }
     }
 
-    LogoField(int size) {
+    public LogoField(int size) {
         this.fieldSize = size;
         this.cellSize = GAME_FIELD_SIZE / fieldSize;
         turtle = new Turtle(3 * cellSize + LEFT_OFFSET, 3 * cellSize + UP_OFFSET, cellSize, size, turtleDrawHistory);
         this.setLayout(new BorderLayout());
-        JPanel commandPanel = new CommandLine();
+        CommandLine commandPanel = new CommandLine();
         commandPanel.setBounds(123, 540, 330, 35);
         commandPanel.setOpaque(true);
         commandPanel.setBackground(new Color(179, 240, 173));
+        commandPanel.addCommandLineListener(new CommandLineListener() {
+            @Override
+            public void commandLineEventOccurred(CommandLineEvent e) {
+                super.commandLineEventOccurred(e);
+                reactOnCommand(e.getCommand(), e.getArgs());
+            }
+        });
         this.add(commandPanel);
         this.add(turtle);
 
     }
 
+    public Turtle getTurtle() {
+        return turtle;
+    }
+
+    private void reactOnCommand(String command, String[] args) {
+        CommandExecutor.executeCommand(command, args, this);
+        repaint();
+    }
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(bg, 0, 0, null);
-
         g.setColor(Color.BLACK);
         Graphics2D g2 = (Graphics2D) g;
         g2.setStroke(new BasicStroke(1.0f));

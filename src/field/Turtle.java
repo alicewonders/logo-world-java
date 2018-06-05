@@ -1,3 +1,5 @@
+package field;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -15,7 +17,7 @@ public class Turtle extends JPanel implements KeyListener {
     private final int LEFT_OFFSET = 40;
     private final int GAME_FIELD_SIZE = 500;
 
-    private int x = 0, y = 0, velx = 0, vely = 0, cell, cage;
+    public int x = 0, y = 0, velx = 0, vely = 0, cell, cellNumber;
     private Color color = WHITE;
     private boolean isDrawing;
     private int drawingFlag = 0;
@@ -31,7 +33,7 @@ public class Turtle extends JPanel implements KeyListener {
         x = startX;
         y = startY;
         cell = cellSize;
-        cage = cageNum;
+        cellNumber = cageNum;
         isDrawing = false;
         repaint();
     }
@@ -42,7 +44,7 @@ public class Turtle extends JPanel implements KeyListener {
         Image turt = null;
         try {
             turt = ImageIO.read(new File(
-                "D:\\Documents\\Education\\OOP\\lilturtle2.png"));
+                "images\\lilturtle2.png"));
         }
         catch (IOException exception) {
             System.err.println("Error while opening image");
@@ -50,10 +52,12 @@ public class Turtle extends JPanel implements KeyListener {
         g.drawImage(turt, x, y, null);
     }
 
-    private void move(char direction, int offset) {
-        if (direction == 'L') {
+
+
+    public void move(char direction, int offset) {
+       if  (direction == 'L') {
             vely = 0;
-            velx = (x < LEFT_OFFSET + cell) ? (cage - offset) * cell : -cell;
+            velx = (x < LEFT_OFFSET + cell) ? (cellNumber - offset) * cell : -cell * offset;
             if (x < LEFT_OFFSET + cell && isDrawing) {
                 isDrawing = !isDrawing;
                 drawingFlag = 1;
@@ -62,7 +66,7 @@ public class Turtle extends JPanel implements KeyListener {
 
         if (direction == 'R'){
             vely = 0;
-            velx = (x > GAME_FIELD_SIZE - cell) ? -(cage - offset) * cell : cell;
+            velx = (x > GAME_FIELD_SIZE - cell) ? -(cellNumber - offset) * cell : cell * offset;
             if (x > GAME_FIELD_SIZE - cell && isDrawing) {
                 isDrawing = !isDrawing;
                 drawingFlag = 1;
@@ -71,7 +75,7 @@ public class Turtle extends JPanel implements KeyListener {
 
         if (direction == 'D') {
             velx = 0;
-            vely = (y > GAME_FIELD_SIZE - cell) ? -(cage - offset) * cell : cell;
+            vely = (y > GAME_FIELD_SIZE - cell) ? -(cellNumber - offset) * cell : cell * offset;
             if (y > GAME_FIELD_SIZE - cell && isDrawing) {
                 isDrawing = !isDrawing;
                 drawingFlag = 1;
@@ -80,7 +84,7 @@ public class Turtle extends JPanel implements KeyListener {
 
         if (direction == 'U') {
             velx = 0;
-            vely = (y < UP_OFFSET + cell) ? (cage - offset) * cell : -cell;
+            vely = (y < UP_OFFSET + cell) ? (cellNumber - offset) * cell : -cell * offset;
             if (y < UP_OFFSET + cell && isDrawing) {
                 isDrawing = !isDrawing;
                 drawingFlag = 1;
@@ -97,6 +101,36 @@ public class Turtle extends JPanel implements KeyListener {
             isDrawing = !isDrawing;
             drawingFlag = 0;
         }
+    }
+
+    public int getMyX() {
+        return x;
+    }
+
+    public int getMyY() {
+        return y;
+    }
+
+    public void setCoordinates(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public void setVelocity(int velx, int vely){
+        this.velx = velx;
+        this.vely = vely;
+    }
+
+    public boolean isDrawing() {
+        return isDrawing;
+    }
+
+    public void draw() {
+        isDrawing = true;
+    }
+
+    public void ward() {
+        isDrawing = false;
     }
 
     private void getMyColor(char c){
