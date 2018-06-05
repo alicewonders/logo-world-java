@@ -1,14 +1,16 @@
+import field.LogoField;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class LogoWorldGame extends JFrame {
     private final int FRAME_SIZE = 600;
 
-    LogoWorldGame(int size) {
+    public LogoWorldGame(int size) {
         super();
         this.setSize(FRAME_SIZE, FRAME_SIZE + 22);
         this.setTitle("LogoWorld v0.1");
-        ImageIcon imgIcon = new ImageIcon("D:\\Documents\\Education\\OOP\\lilturtle2.png");
+        ImageIcon imgIcon = new ImageIcon("images\\lilturtle2.png");
         this.setIconImage(imgIcon.getImage());
         this.setResizable(false);
         this.setLayout(new BorderLayout());
